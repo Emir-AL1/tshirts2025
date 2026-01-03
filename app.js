@@ -22,14 +22,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+var MongoStore = require('connect-mongo').default;
 app.use(session({
  secret: "ThreeTshirts",
  cookie:{maxAge:60*1000},
  proxy: true,
  resave: true,
- saveUninitialized: true
+ saveUninitialized: true,
+ store: MongoStore.create({mongoUrl: 'mongodb://localhost/tshirts2025'})
 }))
-
 
 
 app.use('/', indexRouter);
