@@ -1,10 +1,18 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/testMongoose2025');
 
-var schema = mongoose.Schema({ name: String })
-const shirt = mongoose.model('Tshirt', { name: String });
+
+var Tshirts = require('./models/tshirts.js').Tshirts
 
 
-const puma = new shirt ({ name: 'puma' });
-puma.save().then(() => console.log('Футболка готова)'));
 
+var tshirts = new Tshirts({
+   title: "Puma",
+   nick: "puma",
+
+})
+
+
+
+
+tshirts.save();
