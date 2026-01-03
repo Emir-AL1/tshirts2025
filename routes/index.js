@@ -5,10 +5,12 @@ var User = require('../models/user').User;
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express',  counter:req.session.counter });
 });
+
 /* GET login/registration page. */
 router.get('/logreg', function(req, res, next) {
- res.render('logreg',{title: 'Вход'});
+ res.render('logreg',{title: 'Вход', error: null});
  });
+
  /* POST login/registration page. */
 router.post('/logreg', async function(req, res, next) {
   var username = req.body.username
@@ -30,9 +32,19 @@ router.post('/logreg', async function(req, res, next) {
        req.session.user_id = foundUser._id
        res.redirect('/')
      } else {
-       res.render('logreg',{title: 'Вход'});
+       res.render('logreg',{title: 'Вход', error: 'Пароль не верный'});
      }
+
   }  
 });
+/* POST logout. */
+router.post('/logout', function(req, res, next) {
+ req.session.destroy();
+ res.locals.user = null;
+ res.redirect('/');
+});
+
+
+
 
 module.exports = router;
